@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/data/data.dart';
+import 'package:food_delivery/widgets/nearby_restaurants.dart';
 import 'package:food_delivery/widgets/recent_orders.dart';
 import 'package:food_delivery/widgets/search_field.dart';
 
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SearchField(),
           ),
           RecentOrders(),
+          NearbyRestaurant(),
         ],
       ),
     );
