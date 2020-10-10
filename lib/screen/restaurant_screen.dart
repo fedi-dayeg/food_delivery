@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/food.dart';
 import 'package:food_delivery/models/restaurant.dart';
 import 'package:food_delivery/widgets/rating_stars.dart';
 
@@ -12,6 +14,43 @@ class RestaurantScreen extends StatefulWidget {
 }
 
 class _RestaurantScreenState extends State<RestaurantScreen> {
+  _buildMenuItem(Food menuItem) {
+    return Center(
+        child: Stack(
+      children: [
+        Container(
+          height: 150.0,
+          width: 150.0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(menuItem.imageUrl),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+        ),
+        Container(
+          height: 150.0,
+          width: 150.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            gradient: LinearGradient(colors: [
+              Colors.black.withOpacity(0.3),
+              Colors.black87.withOpacity(0.3),
+              Colors.black54.withOpacity(0.3),
+              Colors.black38.withOpacity(0.3),
+            ], stops: [
+              0.1,
+              0.4,
+              0.6,
+              0.9,
+            ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+          ),
+        ),
+      ],
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +61,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               Hero(
                 tag: widget.restaurant.imageUrl,
                 child: Image(
-                  height: 220.0,
+                  height: 150.0,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
                   image: AssetImage(widget.restaurant.imageUrl),
@@ -111,6 +150,34 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
               ),
             ],
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Center(
+            child: Text(
+              'Menu',
+              style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.2),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Expanded(
+            child: GridView.count(
+              padding: EdgeInsets.all(10.0),
+              crossAxisCount: 2,
+              children: List.generate(
+                widget.restaurant.menu.length,
+                (index) {
+                  Food food = widget.restaurant.menu[index];
+                  return _buildMenuItem(food);
+                },
+              ),
+            ),
           )
         ],
       ),
